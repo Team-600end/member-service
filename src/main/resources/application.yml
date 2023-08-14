@@ -2,9 +2,15 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: member-service
+  profiles:
+    active: config
   config:
     import: "optional:configserver:http://10.0.16.245:8888/"
-  cloud:
-    config:
-      name: member-service
-      profile: config
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
