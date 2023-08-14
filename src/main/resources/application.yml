@@ -12,14 +12,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-  rabbitmq:
-    host: 10.0.2.84
-    port: 5672
-    username: guest
-    password: guest
-
-
-
 management:
   endpoints:
     web:
