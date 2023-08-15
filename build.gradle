@@ -93,6 +93,9 @@ dependencies {
     //Monitorting
     implementation 'io.micrometer:micrometer-registry-prometheus'
     implementation 'io.micrometer:micrometer-core'
+
+    //logstash
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 }
 
 dependencyManagement {
