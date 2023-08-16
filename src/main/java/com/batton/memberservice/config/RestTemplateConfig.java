@@ -7,14 +7,13 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
 import java.nio.charset.Charset;
 import java.time.Duration;
 
 @Configuration
 public class RestTemplateConfig {
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder){
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder
                 .requestFactory(() -> new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()))
                 .setConnectTimeout(Duration.ofMillis(100000))

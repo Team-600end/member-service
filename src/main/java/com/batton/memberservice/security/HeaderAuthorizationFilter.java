@@ -16,6 +16,7 @@ public class HeaderAuthorizationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         if (request.getServletPath().equals("/auth/login")) {
             filterChain.doFilter(request, response);
+
             return;
         }
         filterChain.doFilter(request, response);

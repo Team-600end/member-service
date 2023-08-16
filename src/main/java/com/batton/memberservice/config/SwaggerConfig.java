@@ -14,6 +14,7 @@ public class SwaggerConfig {
                 .components(new Components())
                 .info(apiInfo());
     }
+
     private Info apiInfo() {
         return new Info()
                 .title("Batton Service")

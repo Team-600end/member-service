@@ -24,8 +24,6 @@ public enum BaseResponseStatus {
     EXPIRE_AUTH_CODE(false,607,"인증번호가 만료 되었습니다."),
     IMAGE_UPLOAD_ERROR(false, 610, "이미지 업로드에 실패하였습니다.");
 
-
-
     private final boolean isSuccess;
     private final int code;
     private final String message;

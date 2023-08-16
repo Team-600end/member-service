@@ -38,6 +38,10 @@ public class Member extends BaseEntity {
         this.status = status;
     }
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public void update(String nickname, String profileImage) {
         this.nickname = nickname;
         this.profileImage = profileImage;

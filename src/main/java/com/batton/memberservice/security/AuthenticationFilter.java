@@ -1,6 +1,5 @@
 package com.batton.memberservice.security;
 
-import com.batton.memberservice.common.BaseResponse;
 import com.batton.memberservice.dto.MemberLoginReqDTO;
 import com.batton.memberservice.security.service.RefreshTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +12,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -68,13 +66,21 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String refreshToken = tokenProvider.createRefreshToken();
 
         refreshTokenService.updateRefreshToken(Long.valueOf(memberId), tokenProvider.getRefreshTokenId(refreshToken));
+
+        TokenDTO.TokenData tokenData = TokenDTO.TokenData.builder().accessToken(accessToken)
+                .accessTokenExpiredDate(expiredTime)
+                .refreshToken(refreshToken)
+                .build();
         TokenDTO tokenDTO = TokenDTO.builder()
-                        .accessToken(accessToken)
-                                .accessTokenExpiredDate(expiredTime)
-                                        .refreshToken(refreshToken)
-                                                .build();
+                .isSuccess(true)
+                .code(200)
+                .message("로그인 성공하셨습니다.")
+                .result(tokenData)
+                        .build();
+
         response.setContentType(APPLICATION_JSON_VALUE);
 
         new ObjectMapper().writeValue(response.getOutputStream(), tokenDTO);
+        log.info("로그인 : 유저 " + memberId + " 님이 로그인했습니다.");
     }
 }

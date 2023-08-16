@@ -33,7 +33,6 @@ public class MemberController {
     })
     private GetMemberResDTO getMember(@PathVariable("memberId") Long memberId) {
         GetMemberResDTO getMemberResDTO = memberService.getMember(memberId);
-        log.info("getMember 요청: " + getMemberResDTO.toString());
 
         return getMemberResDTO;
     }
@@ -50,7 +49,6 @@ public class MemberController {
     })
     private BaseResponse<GetMemberInfoResDTO> getMemberInfo(@RequestHeader Long memberId) {
         GetMemberInfoResDTO getMemberInfoResDTO = memberService.getMemberInfo(memberId);
-        log.info("getMember 요청: " + getMemberInfoResDTO.toString());
 
         return new BaseResponse<>(getMemberInfoResDTO);
     }
@@ -67,7 +65,6 @@ public class MemberController {
     })
     private BaseResponse<GetMemberInfoResDTO> getCheckMember(@PathVariable("email") String email) {
         GetMemberInfoResDTO getMemberInfoResDTO = memberService.getCheckMember(email);
-        log.info("getCheckMember 요청: " + getMemberInfoResDTO.toString());
 
         return new BaseResponse<>(getMemberInfoResDTO);
     }
@@ -87,7 +84,6 @@ public class MemberController {
     private BaseResponse<String> patchMember(@RequestHeader Long memberId, @RequestPart(value = "profileImg", required = false) MultipartFile profileImage,
                                              @RequestPart(value = "nickname", required = false) String nickname) {
         String patchMemberRes = memberService.patchMember(memberId, profileImage, nickname);
-        log.info("patchMember 요청: " + patchMemberRes);
 
         return new BaseResponse<>(patchMemberRes);
     }
@@ -108,7 +104,6 @@ public class MemberController {
     })
     private BaseResponse<String> patchMemberPassword(@RequestHeader Long memberId, @RequestBody PatchMemberPasswordReqDTO patchMemberPasswordReqDTO) {
         String patchMemberPasswordRes = memberService.patchMemberPassword(memberId, patchMemberPasswordReqDTO);
-        log.info("patchMemberPassword 요청: " + patchMemberPasswordRes);
 
         return new BaseResponse<>(patchMemberPasswordRes);
     }
@@ -125,4 +120,10 @@ public class MemberController {
 
         return new BaseResponse<>(getMemberIdResDTO);
     }
+
+    /**
+     * 멤버 탈퇴하기 API
+     * @param memberId 탈퇴할 멤버 아이디
+     * @return String
+     */
 }

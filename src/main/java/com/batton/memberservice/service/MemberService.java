@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -84,10 +83,16 @@ public class MemberService {
     public String patchMember(Long memberId, MultipartFile profileImage, String nickname) {
         Optional<Member> member = memberRepository.findById(memberId);
         String url;
+
         // 유저 존재 여부 확인
         if (member.isPresent() && member.get().getStatus().equals(Status.ENABLED)) {
-            url = objectStorageService.uploadFile(profileImage);
-            member.get().update(nickname, url);
+            if (profileImage.isEmpty()) {
+                url = "닉네임 수정 되었습니다.";
+                member.get().updateNickname(nickname);
+            } else {
+                url = objectStorageService.uploadFile(profileImage);
+                member.get().update(nickname, url);
+            }
         } else {
             throw new BaseException(MEMBER_INVALID_USER_ID);
         }
@@ -107,6 +112,7 @@ public class MemberService {
             if (!passwordEncoder.matches(patchMemberPasswordReqDTO.getCurrentPassword(), member.get().getPassword())) {
                 throw new BaseException(MEMBER_PASSWORD_DISCORD);
             }
+
             // 비밀번호 2차 확인
             if (!patchMemberPasswordReqDTO.getChangedPassword().equals(patchMemberPasswordReqDTO.getCheckChangedPassword())) {
                 throw new BaseException(MEMBER_PASSWORD_CONFLICT);
@@ -118,4 +124,8 @@ public class MemberService {
 
         return "회원 비밀번호 수정되었습니다.";
     }
+
+    /**
+     * 유저 탈퇴 API
+     * */
 }
