@@ -2,8 +2,10 @@ package com.batton.memberservice.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class PatchMemberReqDTO {
     private String nickname;
     private String profileImage;
